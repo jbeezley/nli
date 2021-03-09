@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Render3D from './components/Render3D.vue'
+import Render3D from './components/Render3D'
 
 import State from './data/state';
 
