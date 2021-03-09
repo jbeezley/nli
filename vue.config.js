@@ -1,4 +1,5 @@
 const process = require('process'); // eslint-disable-line import/no-extraneous-dependencies
+const vtkChainWebpack = require('vtk.js/Utilities/config/chainWebpack');
 
 module.exports = {
   devServer: {
@@ -8,23 +9,8 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
-    // Add vtk.js shader loader
-    config.module
-      .rule('glsl')
-      .test(/\.glsl$/)
-      .use('shader-loader')
-      .loader('shader-loader');
-
-    // Add vtk.js worker loader
-    config.module
-      .rule('worker')
-      .test(/\.worker\.js$/)
-      .use('worker-loader')
-      .loader('worker-loader')
-      .options({
-        inline: true,
-        fallback: false,
-      });
+      // Add vtk.js rules
+      vtkChainWebpack(config);
 
     // fix development with npm link
     config.resolve.symlinks(false);
@@ -36,9 +22,6 @@ module.exports = {
       config.output.globalObject('this');
     }
   },
-  transpileDependencies: [
-    'vtk.js',
-  ],
   // https://github.com/webpack-contrib/worker-loader/issues/177
   parallel: false,
 };
