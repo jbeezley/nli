@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Render3D
+      v-if="state"
+      :state="state"
+      @point="printSelected"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Render3D from './components/Render3D.vue'
+
+import State from './data/state';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Render3D,
+  },
+  data() {
+    this.loadState();
+    return {
+      state: null,
+    };
+  },
+  methods: {
+    async loadState() {
+      this.state = await State.load('6047ce572fa25629b919f66d');
+    },
+    printSelected(point) {
+      console.log(point);
+    },
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+document,#app {
+  height: 100vh;
+  width: 100%;
 }
 </style>
