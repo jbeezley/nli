@@ -1,4 +1,5 @@
-const process = require('process'); // eslint-disable-line import/no-extraneous-dependencies
+/** eslint-disable **/
+const process = require('process');
 const vtkChainWebpack = require('vtk.js/Utilities/config/chainWebpack');
 
 module.exports = {
