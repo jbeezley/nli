@@ -2,6 +2,7 @@ import vtkXMLImageDataReader from 'vtk.js/Sources/IO/XML/XMLImageDataReader';
 import vtkXMLPolyDataReader from 'vtk.js/Sources/IO/XML/XMLPolyDataReader';
 
 import http from '@/http';
+import vtkDataArray from 'vtk.js/Sources/Common/Core/DataArray';
 
 class State {
   constructor(time, geometry, spore, macrophage, neutrophil) {
@@ -78,7 +79,11 @@ class State {
     if (!success) {
       throw new Error('Could not load poyy data');
     }
-    return polyDataReader.getOutputData(0);
+    const ds = polyDataReader.getOutputData(0);
+    const values = new Uint8Array(ds.getNumberOfPoints());
+    values.fill(1);
+    ds.getPointData().addArray(vtkDataArray.newInstance({ name: 'scale', values }));
+    return ds;
   }
 }
 
