@@ -64,7 +64,6 @@ export default {
     },
   },
   beforeDestroy() {
-    this.removeSelected();
     this.vtk.interactor.unbindEvents();
     this.vtk.openglRenderWindow.delete();
     delete window.vtk;
